@@ -48,3 +48,17 @@ Thermostat.prototype.increaseTemperature = function() {
   };
   this.currentTemperature += 1;
 };
+
+Thermostat.prototype.reset = function() {
+  this.currentTemperature = 20
+};
+
+Thermostat.prototype.energyUsage = function() {
+  if (this.currentTemperature >= 25) {
+    return 'high-usage'
+  } else if (this.currentTemperature >= 18) {
+    return 'medium-usage'
+  } else {
+    return 'low-usage'
+  }
+};
