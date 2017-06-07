@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Thermostat</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="container" id="content">
+
+    <div class="container" id="display" padding="30px">
+      <div class="row">
+        <div class="col-md-2">PSM</div>
+        <div class="col-md-8">Temperature</div>
+        <div class="col-md-2">Energy Usage</div>
+      </div>
+    </div>
+
+    <div class="container" id="console" padding="30px">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="btn-group">
+            <button type="button" class="btn btn-default">PSM On</button>
+            <button type="button" class="btn btn-default">PSM Off</button>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-default">Reset</button>
+        </div>
+        <div class="col-md-7"></div>
+        <div class="col-md-2">
+          <div class="btn-group">
+            <button type="button" class="btn btn-default">Up</button>
+            <button type="button" class="btn btn-default">Down</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script src="src/thermostat.js"></script> 
+</body>
+</html>
