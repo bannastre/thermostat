@@ -7,3 +7,7 @@ function Thermostat(){
 Thermostat.prototype.increaseTemperature = function(degrees) {
   this.temperature += degrees
 };
+
+Thermostat.prototype.decreaseTemperature = function(degrees) {
+  this.temperature -= degrees
+};
