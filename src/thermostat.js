@@ -1,13 +1,14 @@
 'use strict';
 
 function Thermostat(){
-  this.temperature = 20
+  this.currentTemperature = 20
+  this.minimumTemperature = 10
 };
 
 Thermostat.prototype.increaseTemperature = function(degrees) {
-  this.temperature += degrees
+  this.currentTemperature += degrees
 };
 
 Thermostat.prototype.decreaseTemperature = function(degrees) {
-  this.temperature -= degrees
+  this.currentTemperature -= degrees
 };
