@@ -22,6 +22,23 @@ describe('Thermostat', function(){
   });
 
   it("has a minimum temperature of 10 degrees", function(){
-    expect(thermostat.minimumTemperature).toEqual(10)
+    expect(thermostat.minTemperature).toEqual(10)
+  });
+
+  describe('PowerSavingMode', function(){
+    it("has a maximum temperature of 25 degrees if PowerSavingMode is on", function(){
+      expect(thermostat.maxTemperature).toEqual(25)
+    });
+
+    it("has a maximum temperature of 32 degrees if PowerSavingMode is off", function(){
+      thermostat.switchPowerSavingMode()
+      expect(thermostat.maxTemperature).toEqual(32)
+    });
+
+    it("allows maximum temperature to return to 25 when PowerSavingMode is switched back on", function(){
+      thermostat.switchPowerSavingMode()
+      thermostat.switchPowerSavingMode()
+      expect(thermostat.maxTemperature).toEqual(25)
+    })
   });
 });
