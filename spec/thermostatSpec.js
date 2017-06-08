@@ -43,7 +43,7 @@ describe('Thermostat', function(){
     });
 
     it("has a maximum temperature of 32 degrees if PowerSavingMode is off", function(){
-      thermostat.switchPowerSavingModeOff()
+      thermostat.switchPowerSavingMode()
       for ( var i = 0; i < 12; i++){
         thermostat.increaseTemperature();
       }
