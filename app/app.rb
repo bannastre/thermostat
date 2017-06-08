@@ -2,9 +2,9 @@ require 'json'
 require 'sinatra'
 require 'sinatra/cross_origin'
 
-DATA = File.read('myTemperature.json')
-
 class Thermostat < Sinatra::Base
+
+  FILE = 'myTemperature.json'
 
   enable :sessions
 
@@ -17,11 +17,13 @@ class Thermostat < Sinatra::Base
   end
 
   get '/temperature' do
-    DATA
+    data = JSON.parse(File.read(FILE))
+    data["temp"]
   end
 
   post '/temperature' do
-
+    File.write(FILE, params.to_json)
+    redirect '/temperature'
   end
 
   run! if app_file == $0

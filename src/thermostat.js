@@ -53,6 +53,10 @@ Thermostat.prototype.reset = function() {
   this.currentTemperature = 20
 };
 
+Thermostat.prototype.setUserTemperature = function(degrees){
+  this.currentTemperature = degrees
+};
+
 Thermostat.prototype.energyUsage = function() {
   if (this.currentTemperature >= 25) {
     return 'high-usage'

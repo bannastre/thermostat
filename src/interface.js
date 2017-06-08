@@ -1,20 +1,24 @@
 $(document).ready(function(){
   var thermostat = new Thermostat();
+  var server = "http://localhost:9393/temperature";
   updateTemperature();
 
   $('#temperature-up').on('click', function() {
     thermostat.increaseTemperature();
     updateTemperature();
+    getMyTemperature();
   });
 
   $('#temperature-down').on('click', function(){
     thermostat.decreaseTemperature();
     updateTemperature();
+    getMyTemperature();
   });
 
   $('#temperature-reset').on('click', function(){
     thermostat.reset();
     updateTemperature();
+    getMyTemperature();
   });
 
   $('#power-saving-status').on('click', function(){
@@ -36,7 +40,7 @@ $(document).ready(function(){
 
   displayWeather("London");
 
-  displayMyTemperature();
+  setMyTemperature();
 
   $('#current-city').change(function() {
     var city = $('#current-city').val();
@@ -58,10 +62,15 @@ $(document).ready(function(){
     });
   }
 
-  function displayMyTemperature() {
-    $.get("http://localhost:9292/temperature", function(data) {
-      var data = JSON.parse(data);
-      $("#temperature").text(data[0].temp);
+  function setMyTemperature() {
+    $.get(server, function(data) {
+      thermostat.setUserTemperature(data);
+      updateTemperature();
     });
+  }
+
+  function getMyTemperature() {
+    data = {"temp": thermostat.currentTemperature};
+    $.post(server, data);
   }
 });
