@@ -1,6 +1,6 @@
 $(document).ready(function(){
   var thermostat = new Thermostat();
-  var server = "http://localhost:9393/temperature";
+  var server = "http://localhost:9292/";
   updateTemperature();
 
   $('#temperature-up').on('click', function() {
@@ -63,7 +63,7 @@ $(document).ready(function(){
   }
 
   function setMyTemperature() {
-    $.get(server, function(data) {
+    $.get(server + 'temperature', function(data) {
       thermostat.setUserTemperature(data);
       updateTemperature();
     });
@@ -71,6 +71,6 @@ $(document).ready(function(){
 
   function getMyTemperature() {
     data = {"temp": thermostat.currentTemperature};
-    $.post(server, data);
+    $.post(server + 'temperature', data);
   }
 });
