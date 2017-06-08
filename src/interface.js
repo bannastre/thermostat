@@ -1,37 +1,42 @@
 $(document).ready(function(){
   var thermostat = new Thermostat();
-  $('#temperature').text(thermostat.currentTemperature);
+  updateTemperature();
 
   $('#temperature-up').on('click', function() {
     thermostat.increaseTemperature();
-    $('#temperature').text(thermostat.currentTemperature);
+    updateTemperature();
   });
 
   $('#temperature-down').on('click', function(){
     thermostat.decreaseTemperature();
-    $('#temperature').text(thermostat.currentTemperature);
+    updateTemperature();
   });
 
   $('#temperature-reset').on('click', function(){
     thermostat.reset();
-    $('#temperature').text(thermostat.currentTemperature);
+    updateTemperature();
   });
 
   $('#power-saving-status').on('click', function(){
     thermostat.isPowerSavingModeOn();
-    $('#temperature').text(thermostat.currentTemperature);
+    updateTemperature();
   });
 
   $('#powersaving-on').on('click', function(){
     thermostat.switchPowerSavingModeOn();
     $('#power-saving-status').text('on');
-    $('#temperature').text(thermostat.currentTemperature);
+    updateTemperature();
   });
 
   $('#powersaving-off').on('click', function(){
     thermostat.switchPowerSavingModeOff();
     $('#power-saving-status').text('off');
-    $('#temperature').text(thermostat.currentTemperature);
+    updateTemperature();
   });
+
+  function updateTemperature() {
+    $('#temperature').text(thermostat.currentTemperature);
+    $('#temperature').attr('class', thermostat.energyUsage());
+  }
 
 });
