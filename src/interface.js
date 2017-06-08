@@ -36,6 +36,8 @@ $(document).ready(function(){
 
   displayWeather("London");
 
+  displayMyTemperature();
+
   $('#current-city').change(function() {
     var city = $('#current-city').val();
     displayWeather(city);
@@ -56,4 +58,10 @@ $(document).ready(function(){
     });
   }
 
+  function displayMyTemperature() {
+    $.get("http://localhost:9292/temperature", function(data) {
+      var data = JSON.parse(data);
+      $("#temperature").text(data[0].temp);
+    });
+  }
 });
