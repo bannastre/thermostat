@@ -23,7 +23,8 @@ $(document).ready(function(){
 
   $('#powersaving').on('click', function(){
     thermostat.switchPowerSavingMode();
-    updatePSM(storePowerSavingMode());
+    updatePSM();
+    storePowerSavingMode();
   });
 
   $('#current-city').change(function() {
@@ -54,23 +55,18 @@ $(document).ready(function(){
 
 // Power Saving Mode:
 
-  function updatePSM(callback) {
+  function updatePSM() {
     if (thermostat.isPowerSavingModeOn()) {
       $('#power-saving-status').text('on');
     } else {
       $('#power-saving-status').text('off');
     }
-    callback;
   }
 
   function displayPowerSavingMode() {
     $.get(server + '/power_saving_mode', function(data) {
       thermostat.powerSavingMode = ( data === "true" );
-      if ( data === "true" ) {
-        $('#power-saving-status').text('on');
-      } else {
-        $('#power-saving-status').text('off');
-      }
+      updatePSM();
     });
   }
 
