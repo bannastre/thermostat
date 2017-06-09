@@ -21,18 +21,12 @@ $(document).ready(function(){
     updateTemperature(storeTemperature());
   });
 
-  // $('#power-saving-status').on('click', function(){
-  //   thermostat.isPowerSavingModeOn();
-  // });
-
-  $('#powersaving-on').on('click', function(){
-    thermostat.switchPowerSavingModeOn();
-    $('#power-saving-status').text('on');
-  });
-
-  $('#powersaving-off').on('click', function(){
-    thermostat.switchPowerSavingModeOff();
-    $('#power-saving-status').text('off');
+  $('#powersaving').on('click', function(){
+    thermostat.switchPowerSavingMode();
+    if (thermostat.isPowerSavingModeOn()) {
+      $('#power-saving-status').text('on');
+    }
+      $('#power-saving-status').text('off');
   });
 
   $('#current-city').change(function() {
