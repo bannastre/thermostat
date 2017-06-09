@@ -21,7 +21,8 @@ class Thermostat < Sinatra::Base
   end
 
   post '/temperature' do
-    JSON.parse(File.read(FILE))["temp"] = params.first[1]
+    hash = JSON.parse(File.read(FILE))
+    hash["temp"] = params.first[1]
     File.write(FILE, hash.to_json)
     redirect '/temperature'
   end
@@ -31,7 +32,8 @@ class Thermostat < Sinatra::Base
   end
 
   post '/power_saving_mode' do
-    JSON.parse(File.read(FILE))["psm"] = params.first[1]
+    hash = JSON.parse(File.read(FILE))
+    hash["psm"] = params.first[1]
     File.write(FILE, hash.to_json)
     redirect '/power_saving_mode'
   end

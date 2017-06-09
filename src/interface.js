@@ -57,17 +57,20 @@ $(document).ready(function(){
   function updatePSM(callback) {
     if (thermostat.isPowerSavingModeOn()) {
       $('#power-saving-status').text('on');
-    }
+    } else {
       $('#power-saving-status').text('off');
-      callback;
+    }
+    callback;
   }
 
   function displayPowerSavingMode() {
     $.get(server + '/power_saving_mode', function(data) {
-      console.log(data);
-      // TODO updatePSM to change the text after this call
-      // $('#power-saving-status').text(data)
-      thermostat.powerSavingMode = data
+      thermostat.powerSavingMode = ( data === "true" );
+      if ( data === "true" ) {
+        $('#power-saving-status').text('on');
+      } else {
+        $('#power-saving-status').text('off');
+      }
     });
   }
 

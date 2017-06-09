@@ -21,7 +21,6 @@ Thermostat.prototype.decreaseTemperature = function() {
 
 Thermostat.prototype.switchPowerSavingMode = function() {
   ((this.powerSavingMode) ? (this.powerSavingMode = false) : (this.powerSavingMode = true));
-  console.log(this.powerSavingMode)
 }
 
 Thermostat.prototype.isPowerSavingModeOn = function(){
