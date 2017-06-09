@@ -8,10 +8,6 @@ function Thermostat(){
   this.MAX_TEMP_PSM_OFF = 32
 };
 
-Thermostat.prototype.increaseTemperature = function() {
-  this.currentTemperature += 1
-};
-
 Thermostat.prototype.isMinimumTemperature = function(){
   return this.currentTemperature === this.MIN_TEMPERATURE
 };
@@ -51,10 +47,6 @@ Thermostat.prototype.increaseTemperature = function() {
 
 Thermostat.prototype.reset = function() {
   this.currentTemperature = 20
-};
-
-Thermostat.prototype.setUserTemperature = function(degrees){
-  this.currentTemperature = degrees
 };
 
 Thermostat.prototype.energyUsage = function() {

@@ -1,55 +1,48 @@
 $(document).ready(function(){
   var thermostat = new Thermostat();
-  var server = "http://localhost:9292/";
-  updateTemperature();
+  var server = "http://localhost:9292";
+
+  displayWeather("London");
+  displayTemperature();
 
   $('#temperature-up').on('click', function() {
     thermostat.increaseTemperature();
-    updateTemperature();
-    getMyTemperature();
+    updateTemperature(storeTemperature());
   });
 
   $('#temperature-down').on('click', function(){
     thermostat.decreaseTemperature();
-    updateTemperature();
-    getMyTemperature();
+    updateTemperature(storeTemperature());
   });
 
   $('#temperature-reset').on('click', function(){
     thermostat.reset();
-    updateTemperature();
-    getMyTemperature();
+    updateTemperature(storeTemperature());
   });
 
   $('#power-saving-status').on('click', function(){
     thermostat.isPowerSavingModeOn();
-    updateTemperature();
   });
 
   $('#powersaving-on').on('click', function(){
     thermostat.switchPowerSavingModeOn();
     $('#power-saving-status').text('on');
-    updateTemperature();
   });
 
   $('#powersaving-off').on('click', function(){
     thermostat.switchPowerSavingModeOff();
     $('#power-saving-status').text('off');
-    updateTemperature();
   });
-
-  displayWeather("London");
-
-  setMyTemperature();
 
   $('#current-city').change(function() {
     var city = $('#current-city').val();
     displayWeather(city);
   });
 
-  function updateTemperature() {
+  function updateTemperature(callback) {
     $('#temperature').text(thermostat.currentTemperature);
     $('#temperature').attr('class', thermostat.energyUsage());
+    callback;
   }
 
   function displayWeather(city) {
@@ -62,15 +55,15 @@ $(document).ready(function(){
     });
   }
 
-  function setMyTemperature() {
-    $.get(server + 'temperature', function(data) {
-      thermostat.setUserTemperature(data);
-      updateTemperature();
+  function displayTemperature() {
+    $.get(server + '/temperature', function(data) {
+      $('#temperature').text(data);
+      thermostat.currentTemperature = data;
     });
   }
 
-  function getMyTemperature() {
-    data = {"temp": thermostat.currentTemperature};
-    $.post(server + 'temperature', data);
+  function storeTemperature() {
+    $.post(server + '/temperature', {"temp": thermostat.currentTemperature});
   }
+
 });
