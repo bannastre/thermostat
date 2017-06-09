@@ -65,7 +65,9 @@ $(document).ready(function(){
   function displayPowerSavingMode() {
     $.get(server + '/power_saving_mode', function(data) {
       console.log(data);
+      // TODO updatePSM to change the text after this call
       // $('#power-saving-status').text(data)
+      thermostat.powerSavingMode = data
     });
   }
 
