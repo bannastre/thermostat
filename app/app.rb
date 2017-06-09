@@ -17,11 +17,13 @@ class Thermostat < Sinatra::Base
   end
 
   get '/temperature' do
-    JSON.parse(File.read(FILE))["temp"]
+    "24"
+    # JSON.parse(File.read(FILE))["temp"]
   end
 
   post '/temperature' do
-    File.write(FILE, params.to_json)
+    @user_temp = params.first
+    # File.write(FILE, params.to_json)
     redirect '/temperature'
   end
 
@@ -30,8 +32,18 @@ class Thermostat < Sinatra::Base
   end
 
   post '/power_saving_mode' do
+    @user_psm = params.first
     redirect '/power_saving_mode'
   end
+  #
+  # helpers do
+  #   def update_user_file
+  #     file_source = {}
+  #     file_source["temp"] = @user_temp[1]
+  #     file_source["psm"] = @user_psm[1]
+  #     p file_source.to_json
+  #   end
+  # end
 
   run! if app_file == $0
 end

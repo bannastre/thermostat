@@ -70,7 +70,7 @@ $(document).ready(function(){
   }
 
   function storePowerSavingMode() {
-    $.post(server + '/power_saving_mode', {"PSM": thermostat.powerSavingMode});
+    $.post(server + '/power_saving_mode', {"psm": thermostat.powerSavingMode});
   }
 
 
