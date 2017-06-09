@@ -4,6 +4,7 @@ $(document).ready(function(){
 
   displayWeather("London");
   displayTemperature();
+  displayPowerSavingMode();
 
   $('#temperature-up').on('click', function() {
     thermostat.increaseTemperature();
@@ -20,9 +21,9 @@ $(document).ready(function(){
     updateTemperature(storeTemperature());
   });
 
-  $('#power-saving-status').on('click', function(){
-    thermostat.isPowerSavingModeOn();
-  });
+  // $('#power-saving-status').on('click', function(){
+  //   thermostat.isPowerSavingModeOn();
+  // });
 
   $('#powersaving-on').on('click', function(){
     thermostat.switchPowerSavingModeOn();
@@ -57,13 +58,24 @@ $(document).ready(function(){
 
   function displayTemperature() {
     $.get(server + '/temperature', function(data) {
-      $('#temperature').text(data);
-      thermostat.currentTemperature = data;
+      $('#temperature').text(parseInt(data));
+      thermostat.currentTemperature = parseInt(data);
     });
   }
 
   function storeTemperature() {
     $.post(server + '/temperature', {"temp": thermostat.currentTemperature});
+  }
+
+  function displayPowerSavingMode() {
+    $.get(server + '/power_saving_mode', function(data) {
+      console.log(data);
+      // $('#power-saving-status').text(data)
+    });
+  }
+
+  function storePowerSavingMode() {
+    $.post(server + '/power_saving_mode', {"PSM": thermostat.powerSavingMode});
   }
 
 });
