@@ -23,10 +23,7 @@ $(document).ready(function(){
 
   $('#powersaving').on('click', function(){
     thermostat.switchPowerSavingMode();
-    if (thermostat.isPowerSavingModeOn()) {
-      $('#power-saving-status').text('on');
-    }
-      $('#power-saving-status').text('off');
+    updatePSM(storePowerSavingMode());
   });
 
   $('#current-city').change(function() {
@@ -34,20 +31,13 @@ $(document).ready(function(){
     displayWeather(city);
   });
 
+
+// Temperature:
+
   function updateTemperature(callback) {
     $('#temperature').text(thermostat.currentTemperature);
     $('#temperature').attr('class', thermostat.energyUsage());
     callback;
-  }
-
-  function displayWeather(city) {
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' ;
-    var token = '&appid=a3d9eb01d4de82b9b8d0849ef604dbed';
-    var units = '&units=metric';
-
-    $.get(url + city + token + units, function(data) {
-      $('#current-temperature').text(data.main.temp);
-    });
   }
 
   function displayTemperature() {
@@ -61,6 +51,17 @@ $(document).ready(function(){
     $.post(server + '/temperature', {"temp": thermostat.currentTemperature});
   }
 
+
+// Power Saving Mode:
+
+  function updatePSM(callback) {
+    if (thermostat.isPowerSavingModeOn()) {
+      $('#power-saving-status').text('on');
+    }
+      $('#power-saving-status').text('off');
+      callback;
+  }
+
   function displayPowerSavingMode() {
     $.get(server + '/power_saving_mode', function(data) {
       console.log(data);
@@ -70,6 +71,19 @@ $(document).ready(function(){
 
   function storePowerSavingMode() {
     $.post(server + '/power_saving_mode', {"PSM": thermostat.powerSavingMode});
+  }
+
+
+  // Weather:
+
+  function displayWeather(city) {
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' ;
+    var token = '&appid=a3d9eb01d4de82b9b8d0849ef604dbed';
+    var units = '&units=metric';
+
+    $.get(url + city + token + units, function(data) {
+      $('#current-temperature').text(data.main.temp);
+    });
   }
 
 });
