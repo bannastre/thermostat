@@ -4,6 +4,7 @@ $(document).ready(function(){
 
   displayWeather("London");
   displayTemperature();
+  displayPowerSavingMode();
 
   $('#temperature-up').on('click', function() {
     thermostat.increaseTemperature();
@@ -20,18 +21,10 @@ $(document).ready(function(){
     updateTemperature(storeTemperature());
   });
 
-  $('#power-saving-status').on('click', function(){
-    thermostat.isPowerSavingModeOn();
-  });
-
-  $('#powersaving-on').on('click', function(){
-    thermostat.switchPowerSavingModeOn();
-    $('#power-saving-status').text('on');
-  });
-
-  $('#powersaving-off').on('click', function(){
-    thermostat.switchPowerSavingModeOff();
-    $('#power-saving-status').text('off');
+  $('#powersaving').on('click', function(){
+    thermostat.switchPowerSavingMode();
+    updatePSM();
+    storePowerSavingMode();
   });
 
   $('#current-city').change(function() {
@@ -39,11 +32,50 @@ $(document).ready(function(){
     displayWeather(city);
   });
 
+
+// Temperature:
+
   function updateTemperature(callback) {
     $('#temperature').text(thermostat.currentTemperature);
     $('#temperature').attr('class', thermostat.energyUsage());
     callback;
   }
+
+  function displayTemperature() {
+    $.get(server + '/temperature', function(data) {
+      $('#temperature').text(parseInt(data));
+      thermostat.currentTemperature = parseInt(data);
+    });
+  }
+
+  function storeTemperature() {
+    $.post(server + '/temperature', {"temp": thermostat.currentTemperature});
+  }
+
+
+// Power Saving Mode:
+
+  function updatePSM() {
+    if (thermostat.isPowerSavingModeOn()) {
+      $('#power-saving-status').text('on');
+    } else {
+      $('#power-saving-status').text('off');
+    }
+  }
+
+  function displayPowerSavingMode() {
+    $.get(server + '/power_saving_mode', function(data) {
+      thermostat.powerSavingMode = ( data === "true" );
+      updatePSM();
+    });
+  }
+
+  function storePowerSavingMode() {
+    $.post(server + '/power_saving_mode', {"psm": thermostat.powerSavingMode});
+  }
+
+
+  // Weather:
 
   function displayWeather(city) {
     var url = 'http://api.openweathermap.org/data/2.5/weather?q=' ;
@@ -53,17 +85,6 @@ $(document).ready(function(){
     $.get(url + city + token + units, function(data) {
       $('#current-temperature').text(data.main.temp);
     });
-  }
-
-  function displayTemperature() {
-    $.get(server + '/temperature', function(data) {
-      $('#temperature').text(data);
-      thermostat.currentTemperature = data;
-    });
-  }
-
-  function storeTemperature() {
-    $.post(server + '/temperature', {"temp": thermostat.currentTemperature});
   }
 
 });
